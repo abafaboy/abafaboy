@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="Abafa Mukhamedov — I build things that ship, and I check they work">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d0d0f"/>
+      <stop offset="1" stop-color="#1a0b0a"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.04"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="300" rx="18" fill="url(#bg)"/>
+  <rect width="1200" height="300" rx="18" fill="url(#grid)"/>
+  <rect x="880" y="40" width="260" height="220" rx="28" fill="#f4f1ee"/>
+  <g transform="translate(1010 160)">
+    <path d="M-110 70 L0 -80 L110 70 L70 70 L0 -25 L-70 70 Z" fill="#e0362b"/>
+    <path d="M-52 70 L0 -2 L52 70 L28 70 L0 32 L-28 70 Z" fill="#111113"/>
+  </g>
+  <text x="64" y="118" fill="#ffffff" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="56" font-weight="800" letter-spacing="-1">Abafa Mukhamedov</text>
+  <text x="66" y="168" fill="#e0362b" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="26" font-weight="700">I build things that ship, and I check they work.</text>
+  <text x="66" y="222" fill="#a4a4ad" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">Fortnite islands · developer tools · AI agent skills · web</text>
+  <text x="66" y="252" fill="#6f6f78" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16">Tashkent, Uzbekistan · EN / RU / UZ</text>
+</svg>
