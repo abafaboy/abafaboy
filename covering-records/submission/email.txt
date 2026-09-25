@@ -1,40 +1,40 @@
 Hi Erich,
 
-I would like to submit improved coverings for 5 of the covering pages: 5 new configurations, and 11 better-optimised versions of configurations already on the pages. Pictures are attached as one zip per page, each holding a folder named after the page; every picture has the same file name, size and colours as the one it replaces. Values are truncated (not rounded) to 5 decimal places.
+I would like to submit improved coverings for 5 of the covering pages: 5 new configurations, and 11 better-optimised versions of configurations already on the pages. The 16 pictures are attached directly as GIF files (no zips), named as on your pages, for example scc12.gif for 12 squares covering a circle. Each has the same size and colours as the picture it replaces. Values are truncated (not rounded) to 5 decimal places.
 
 PART 1. New configurations. Each is a different arrangement from the current picture, not a re-optimised copy of it.
 
-Squares Covering Circles (folder sqcovcir, pictures sccN.gif)
+Squares Covering Circles (page sqcovcir, pictures sccN.gif)
   n = 12: r = 1.71239   [current: 1.701+, David Cantrell, Aug 2002]
   n = 18: r = 2.12480   [current: 2.116+, Maurizio Morandi, Jun 2009]
 
-Triangles Covering Circles (folder tricovcir, pictures tccN.gif)
+Triangles Covering Circles (page tricovcir, pictures tccN.gif)
   n = 9: r = 1.01456   [current: (81√3 − 6√30)/106 = 1.01351+, David Cantrell, Jul 2005]
   n = 12: r = 1.18644   [current: (7√3 − √7)/8 = 1.18482+, David Cantrell, Jul 2005]
 
-Squares Covering Triangles (folder squcotri, pictures sctN.gif)
+Squares Covering Triangles (page squcotri, pictures sctN.gif)
   n = 12: s = 4.50628   [current: 2√3 + √6 − √2 = 4.49937+, Maurizio Morandi, May 2009]
 
 PART 2. Better-optimised versions of the current configurations. I compared each one piece by piece with the current picture, allowing rotations and reflections of the whole figure. Each is the SAME arrangement with the pieces moved slightly, so the design belongs to the original finder, and I am not claiming these as new configurations. They do cover a larger target, so you may want the improved values. Please credit them however you think is fair.
 
-Squares Covering Circles (folder sqcovcir, pictures sccN.gif)
+Squares Covering Circles (page sqcovcir, pictures sccN.gif)
   n = 7: r = 1.24188   [current: 1.239+, David Cantrell, Jul 2002]
   n = 8: r = 1.37642   [current: 1.375+, Maurizio Morandi, Mar 2009]
   n = 13: r = 1.78149   [current: 1.779+, Maurizio Morandi, Apr 2009]
   n = 17: r = 2.04718   [current: 2.042+, Maurizio Morandi, Jun 2009]
 
-Triangles Covering Circles (folder tricovcir, pictures tccN.gif)
+Triangles Covering Circles (page tricovcir, pictures tccN.gif)
   n = 11: r = 1.14249   [current: (177√3 − 2√586)/226 = 1.14229+, David Cantrell, Jul 2005]
 
-Triangles Covering Squares (folder tricosqu, pictures tcsN.gif)
+Triangles Covering Squares (page tricosqu, pictures tcsN.gif)
   n = 10: s = 1.88870   [current: 5/√3 − 1 = 1.88675+, Maurizio Morandi, Apr 2009]
   n = 11: s = 1.98371   [current: √3 + 1/4 = 1.98205+, Maurizio Morandi, Apr 2009]
 
-Squares Covering Triangles (folder squcotri, pictures sctN.gif)
+Squares Covering Triangles (page squcotri, pictures sctN.gif)
   n = 10: s = 4.20424   [current: 4.197+, Maurizio Morandi, Apr 2009]
   n = 11: s = 4.35736   [current: 4.35451+, Ryan Chi and d/dx, Sep 2026]
 
-Squares Covering Squares (folder squcosqu, pictures scsN.gif)
+Squares Covering Squares (page squcosqu, pictures scsN.gif)
   n = 12: A = 9.09558   [current: 9.08195+, Ryan Chi, Sep 2026]
   n = 14: A = 10.86482   [current: 10.860+, Michael Kearney, Jul 2002]
 
@@ -42,7 +42,7 @@ How they were found: a computer search that I ran with Claude Code (an AI coding
 
 How they were checked: every value is a certified lower bound. Each configuration is stored with rational centres and rational rotations, so the squares are exactly unit squares and the triangles exactly unit triangles. An exact-arithmetic program (rationals and sqrt 3, no floating point) proves that the target of the stated size is completely covered. A second, independently written exact checker and a floating-point check with Shapely agree. Enlarging any target by one part in a million makes the checks fail.
 
-Exact coordinates, certificates and code: https://github.com/abafaboy/abafaboy/tree/claude/new-session-nd3rcp/covering-records
+Exact coordinates, certificates and code are on GitHub: repository abafaboy/abafaboy, branch claude/new-session-nd3rcp, folder covering-records.
 
 Name for attribution (for part 1): Abdulfayyod Mukhamedov
 

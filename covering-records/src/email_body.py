@@ -3,7 +3,7 @@
 Part 1 lists configurations judged to be new arrangements; part 2 lists
 re-optimised versions of the current record arrangements, labelled as such.
 
-usage: python email_body.py > ../submission/email.txt
+usage: python email_body.py > ../submission/email.txt   (pictures are attached as loose GIFs)
 """
 import glob
 import json
@@ -23,7 +23,7 @@ PAGES = [(("sq", "disk"), "Squares Covering Circles", "sqcovcir", "scc", "r"),
          (("sq", "triangle"), "Squares Covering Triangles", "squcotri", "sct", "s"),
          (("tri", "triangle"), "Triangles Covering Triangles", "tricovtri", "tct", "s"),
          (("sq", "square"), "Squares Covering Squares", "squcosqu", "scs", "A")]
-REPO = "https://github.com/abafaboy/abafaboy/tree/claude/new-session-nd3rcp/covering-records"
+REPO_NAME, BRANCH = "abafaboy/abafaboy", "claude/new-session-nd3rcp"
 
 
 def trunc5(v):
@@ -52,7 +52,7 @@ def section(certs, want_reopt):
         if not rows:
             continue
         out.append("")
-        out.append(f"{title} (folder {page}, pictures {prefix}N.gif)")
+        out.append(f"{title} (page {page}, pictures {prefix}N.gif)")
         for c in sorted(rows, key=lambda c: c["n"]):
             v = Fraction(c["size"])
             if key == ("sq", "square"):
@@ -73,9 +73,9 @@ def main():
     out = ["Hi Erich,", ""]
     out.append(f"I would like to submit improved coverings for {len(certs)} of the covering pages: {n_new} new "
                f"configurations, and {n_re} better-optimised versions of configurations already on the pages. "
-               "Pictures are attached as one zip per page, each holding a folder named after the page; every "
-               "picture has the same file name, size and colours as the one it replaces. Values are truncated "
-               "(not rounded) to 5 decimal places.")
+               f"The {n_new + n_re} pictures are attached directly as GIF files (no zips), named as on your pages, "
+               "for example scc12.gif for 12 squares covering a circle. Each has the same size and colours as "
+               "the picture it replaces. Values are truncated (not rounded) to 5 decimal places.")
     out.append("")
     out.append("PART 1. New configurations. Each is a different arrangement from the current picture, not a "
                "re-optimised copy of it.")
@@ -101,7 +101,9 @@ def main():
                "written exact checker and a floating-point check with Shapely agree. Enlarging any target by one "
                "part in a million makes the checks fail.")
     out.append("")
-    out.append(f"Exact coordinates, certificates and code: {REPO}")
+    # plain words, not a URL: the Gmail connector rewrites every link into a google.com redirect
+    out.append(f"Exact coordinates, certificates and code are on GitHub: repository {REPO_NAME}, branch {BRANCH}, "
+               f"folder covering-records.")
     out.append("")
     out.append("Name for attribution (for part 1): Abdulfayyod Mukhamedov")
     out.append("")

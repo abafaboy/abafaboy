@@ -124,9 +124,11 @@ size is covered, and the true optimum of each configuration is higher by about
    short), and 11 and 15 squares covering a circle (0.0002 short).
 
 What has **not** been done: nobody outside this repo has checked these yet. The
-submission to Friedman's page is described in [`submission/`](submission/).
-[`submission/`](submission/) holds pictures and values in the format
-[his guidelines](https://erich-friedman.github.io/packing/submit.html) ask for.
+16 submitted pictures and the email text
+([`submission/email.txt`](submission/email.txt)) were sent to Erich Friedman on
+25 September 2026, following
+[his guidelines](https://erich-friedman.github.io/packing/submit.html). Nothing
+counts as a record until he accepts it and updates the pages.
 
 ## How the records were found
 
