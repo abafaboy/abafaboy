@@ -21,6 +21,7 @@ PAGES = [(("sq", "disk"), "Squares Covering Circles", "sqcovcir", "scc", "r"),
          (("tri", "triangle"), "Triangles Covering Triangles", "tricovtri", "tct", "s"),
          (("sq", "square"), "Squares Covering Squares", "squcosqu", "scs", "A")]
 REPO = "https://github.com/abafaboy/abafaboy/tree/claude/new-session-nd3rcp/covering-records"
+ZIP = "https://github.com/abafaboy/abafaboy/raw/claude/new-session-nd3rcp/covering-records/submission/submission.zip"
 
 
 def trunc5(v):
@@ -53,8 +54,9 @@ def main():
     out.append("Hi Erich,")
     out.append("")
     out.append(f"I would like to submit {total} improved configurations for {npages} of the covering pages. "
-               "One picture is attached for each, with the same file name, size and colours as the picture "
-               "it replaces. Values are truncated (not rounded) to 5 decimal places.")
+               "One picture is included for each, with the same file name, size and colours as the picture "
+               "it replaces. They are in the attached submission.zip, one folder per page (the same zip is "
+               f"also at {ZIP} ). Values are truncated (not rounded) to 5 decimal places.")
     for key, title, page, prefix, sym in PAGES:
         if key not in certs:
             continue

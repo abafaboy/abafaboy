@@ -1,6 +1,6 @@
 Hi Erich,
 
-I would like to submit 17 improved configurations for 5 of the covering pages. One picture is attached for each, with the same file name, size and colours as the picture it replaces. Values are truncated (not rounded) to 5 decimal places.
+I would like to submit 17 improved configurations for 5 of the covering pages. One picture is included for each, with the same file name, size and colours as the picture it replaces. They are in the attached submission.zip, one folder per page (the same zip is also at https://github.com/abafaboy/abafaboy/raw/claude/new-session-nd3rcp/covering-records/submission/submission.zip ). Values are truncated (not rounded) to 5 decimal places.
 
 Squares Covering Circles (sccN.gif)
   n = 7: r = 1.24188   [previous: 1.239+, David Cantrell, Jul 2002]
