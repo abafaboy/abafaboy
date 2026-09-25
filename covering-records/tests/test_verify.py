@@ -55,6 +55,15 @@ def test_known_exact_coverings():
     assert not verify.verify(_trivial("sq", "square", Fraction(1, 2), apart), **quiet)
 
 
+def test_rejects_bad_input():
+    one = [(0, 0, 0)]
+    assert not verify.verify(_trivial("sq", "disk", -1, one), **quiet)          # negative size
+    assert not verify.verify(_trivial("sq", "square", 0, one), **quiet)         # zero size
+    assert not verify.verify(_trivial("sq", "disk", Fraction(1, 4), []), **quiet)  # no pieces
+    bad = _trivial("sq", "disk", Fraction(1, 4), one); bad["n"] = 7
+    assert not verify.verify(bad, **quiet)                                      # n mismatch
+
+
 def test_certificates_pass_and_controls_fail():
     assert CERTS, "no certificates found"
     for path in CERTS:

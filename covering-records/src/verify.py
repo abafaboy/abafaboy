@@ -159,14 +159,24 @@ def dist2_point_segment(px, py, ax, ay, bx, by):
 def verify(cert, log=print):
     kind, target = cert["kind"], cert["target"]
     size = Q(cert["size"])
+    # Input validation uses explicit checks (not assert, which python -O strips).
+    if not size > 0:
+        log(f"REJECTED: target size must be positive, got {cert['size']}")
+        return False
+    if kind not in ("sq", "tri") or target not in ("square", "triangle", "disk"):
+        log(f"REJECTED: unknown kind/target {kind}/{target}")
+        return False
     pieces = []
     for p in cert["pieces"]:
         v = piece_vertices(kind, Q(p["x"]), Q(p["y"]), Q(p["t"]))
-        for d2 in side_lengths_sq(v):
-            assert d2 == K(1), "piece is not unit"
+        if any(d2 != K(1) for d2 in side_lengths_sq(v)):
+            log("REJECTED: a piece is not unit-sized")
+            return False
         pieces.append(v)
     n = len(pieces)
-    assert n == cert["n"], "piece count mismatch"
+    if n != cert["n"] or n == 0:
+        log(f"REJECTED: certificate says n={cert['n']} but lists {n} pieces")
+        return False
 
     # target description
     if target == "square":

@@ -17,6 +17,7 @@ from fractions import Fraction
 from PIL import Image, ImageDraw
 
 from geom import piece_vertices
+from records import NOT_SUBMITTED
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
@@ -76,6 +77,8 @@ def main(site):
     by_page = {}
     for path in sorted(glob.glob(os.path.join(ROOT, "certificates", "*.json"))):
         cert = json.load(open(path))
+        if (cert["kind"], cert["target"], cert["n"]) in NOT_SUBMITTED:
+            continue
         page, prefix = PAGE[(cert["kind"], cert["target"])]
         if prefix is None:     # these pages name pictures 1.gif, 2.gif, ...
             name = f"{cert['n']}.gif"

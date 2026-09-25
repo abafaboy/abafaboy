@@ -11,5 +11,5 @@
 <polygon points="91.12,86.19 91.12,292.38 269.69,189.28" fill="#9c755f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
 <polygon points="308.41,196.69 308.41,402.89 486.98,299.79" fill="#bab0ac" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
 <rect x="91.12" y="39.44" width="389.44" height="389.44" fill="none" stroke="black" stroke-width="2.5"/>
-<text x="8" y="510" font-family="sans-serif" font-size="15">n = 10, s = 1.888704818</text>
+<text x="8" y="510" font-family="sans-serif" font-size="15">n = 10, s = 1.888704817</text>
 </svg>

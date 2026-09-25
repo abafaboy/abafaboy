@@ -1,3 +1,2 @@
 n = 12: A = 9.09558  (certified lower bound 9.095585625)
 n = 14: A = 10.86482  (certified lower bound 10.864825013)
-n = 15: A = 11.84730  (certified lower bound 11.847300633)

@@ -50,9 +50,9 @@ def svg(cert, px=520):
         cx, cy = T(0, 0)
         out.append(f'<circle cx="{cx:.2f}" cy="{cy:.2f}" r="{half*sc:.2f}" fill="none" stroke="black" stroke-width="2.5"/>')
     if kind == "sq" and target == "square":
-        txt = f"A = {size * size:.9f}"
+        txt = f"A = {math.floor(size * size * 1e9) / 1e9:.9f}"
     else:
-        txt = f'{ {"square": "s", "disk": "r", "triangle": "s"}[target] } = {size:.9f}'
+        txt = f'{ {"square": "s", "disk": "r", "triangle": "s"}[target] } = {math.floor(size * 1e9) / 1e9:.9f}'
     out.append(f'<text x="8" y="{px-10}" font-family="sans-serif" font-size="15">n = {cert["n"]}, {txt}</text>')
     out.append("</svg>")
     return "\n".join(out)

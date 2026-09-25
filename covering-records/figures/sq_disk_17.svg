@@ -18,5 +18,5 @@
 <polygon points="162.10,282.00 64.66,292.04 74.70,389.49 172.14,379.45" fill="#edc948" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
 <polygon points="194.01,338.95 108.11,386.05 155.21,471.95 241.11,424.85" fill="#b07aa1" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
 <circle cx="262.25" cy="257.75" r="200.55" fill="none" stroke="black" stroke-width="2.5"/>
-<text x="8" y="510" font-family="sans-serif" font-size="15">n = 17, r = 2.047182901</text>
+<text x="8" y="510" font-family="sans-serif" font-size="15">n = 17, r = 2.047182900</text>
 </svg>

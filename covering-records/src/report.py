@@ -13,7 +13,7 @@ sys.path.insert(0, HERE)
 import make_cert  # noqa: E402
 import plot  # noqa: E402
 import verify  # noqa: E402
-from records import FORMULA, RECORDS, TRUNC_STEP, beats  # noqa: E402
+from records import FORMULA, REFINEMENTS, RECORDS, TRUNC_STEP, beats  # noqa: E402
 
 ROOT = os.path.join(HERE, "..")
 NAMES = {("tri", "square"): "Triangles covering squares (side s)",
@@ -22,6 +22,12 @@ NAMES = {("tri", "square"): "Triangles covering squares (side s)",
          ("sq", "triangle"): "Squares covering triangles (side s)",
          ("tri", "triangle"): "Triangles covering triangles (side s)",
          ("sq", "square"): "Squares covering squares (area A)"}
+
+
+def trunc_str(x, digits):
+    """Truncate (never round up): certified values are lower bounds."""
+    import math
+    return f"{math.floor(x * 10 ** digits) / 10 ** digits:.{digits}f}"
 
 
 def floor_fmt(x, digits=4):
@@ -73,8 +79,9 @@ def main():
         rows.setdefault(key, {})[n] = (cert["size_decimal"], base, True)
 
     lines = []
+    refined = []
     for key, name in NAMES.items():
-        if key not in rows:
+        if key not in rows or not any(v[2] and (key[0], key[1], n) not in REFINEMENTS for n, v in rows[key].items()):
             continue
         lines.append(f"### {name}\n")
         lines.append("| n | previous record | holder | new value (verified) | improvement | files |")
@@ -86,15 +93,32 @@ def main():
                 continue
             _, bar = beats(key[0], key[1], n, val)
             recs, trunc = rec_str(key, n)
+            if (key[0], key[1], n) in REFINEMENTS:
+                dv, db = disp(key, val), disp(key, bar)
+                refined.append(f"| {name.split(' (')[0]} | {n} | {recs} | {who} | {trunc_str(dv, 9)} | "
+                               f"[svg](figures/{base}.svg) · [cert](certificates/{base}.json) |")
+                continue
             dv, dr, db = disp(key, val), disp(key, rec), disp(key, bar)
             gain = f"≥ +{floor_fmt(dv - db)}" if trunc else f"+{floor_fmt(dv - dr, 6)}"
-            lines.append(f"| {n} | {recs} | {who} | **{dv:.9f}** | {gain} | "
+            lines.append(f"| {n} | {recs} | {who} | **{trunc_str(dv, 9)}** | {gain} | "
                          f"[svg](figures/{base}.svg) · [cert](certificates/{base}.json) |")
+        lines.append("")
+    if refined:
+        lines.append("### Re-optimised versions of the current record arrangements\n")
+        lines.append("Each of these beats the current value, and is verified exactly like the new records above. But "
+                     "independent reviewers, matching pieces one-to-one under rotations and reflections, found each "
+                     "configuration to be the same arrangement as the current record's picture with the pieces moved "
+                     "slightly. The design belongs to the original finder, so these are reported as re-optimisations, "
+                     "not as new configurations (see docs/ORIGINALITY.md).\n")
+        lines.append("| problem | n | current record | holder | re-optimised value (verified) | files |")
+        lines.append("|---|---|---|---|---|---|")
+        lines.extend(refined)
         lines.append("")
     open(os.path.join(ROOT, "results", "table.md"), "w").write("\n".join(lines))
     print("\n".join(lines))
     write_all(rows)
-    inject_readme("\n".join(lines), sum(1 for r in rows.values() for v in r.values() if v[2]))
+    inject_readme("\n".join(lines), sum(1 for key, r in rows.items() for n, v in r.items()
+                                        if v[2] and (key[0], key[1], n) not in REFINEMENTS))
 
 
 def inject_readme(table, count):
@@ -116,7 +140,9 @@ def write_all(rows):
             _, bar = beats(key[0], key[1], n, val)
             trunc = bar != rec
             recs, _t = rec_str(key, n, 7)
-            if new:
+            if new and (key[0], key[1], n) in REFINEMENTS:
+                status = "re-optimised version of the current record's arrangement (verified)"
+            elif new:
                 status = "**new record** (exactly verified)"
             elif (trunc and rec <= val < bar) or (not trunc and abs(val - rec) < 1e-7):
                 status = "consistent with record (page gives a truncated decimal)" if trunc else "matches record"
@@ -124,7 +150,7 @@ def write_all(rows):
                 status = f"below record by {disp(key, rec) - disp(key, val):.4f}"
             else:
                 status = "above printed value, not by a certain margin"
-            out.append(f"| {name.split(' (')[0]} | {n} | {recs} | {disp(key, val):.7f} | {status} |")
+            out.append(f"| {name.split(' (')[0]} | {n} | {recs} | {trunc_str(disp(key, val), 7)} | {status} |")
     open(os.path.join(ROOT, "results", "all.md"), "w").write("\n".join(out) + "\n")
 
 

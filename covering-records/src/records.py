@@ -165,3 +165,17 @@ FORMULA = {
     ("tri", "disk"): {9: "(81√3 − 6√30)/106", 11: "(177√3 − 2√586)/226", 12: "(7√3 − √7)/8"},
     ("sq", "triangle"): {1: "√6 − √2", 4: "4/√3", 12: "2√3 + √6 − √2"},
 }
+
+# Originality review (25 Sep 2026). Every certificate was compared with the
+# picture of the record it beats, by independent reviewers using piece-by-piece
+# matching under rotations and reflections (see docs/ORIGINALITY.md).
+# REOPTIMISED: same arrangement as the current record, pieces moved slightly
+#   (largest matched displacement 0.02-0.24 of a piece side); the value is a real
+#   improvement but the design belongs to the original finder.
+# NOT_SUBMITTED: re-optimisations whose gain is too small to be worth submitting.
+REOPTIMISED = {("sq", "disk", 7), ("sq", "disk", 8), ("sq", "disk", 13), ("sq", "disk", 17),
+               ("tri", "disk", 11), ("tri", "square", 10), ("tri", "square", 11),
+               ("sq", "triangle", 10), ("sq", "triangle", 11),
+               ("sq", "square", 12), ("sq", "square", 14), ("sq", "square", 15)}
+NOT_SUBMITTED = {("sq", "square", 15)}
+REFINEMENTS = REOPTIMISED      # backwards-compatible name
