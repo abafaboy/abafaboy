@@ -50,3 +50,20 @@
 | Squares covering triangles | 10 | 4.197+ | 4.2042419 | **new record** (exactly verified) |
 | Squares covering triangles | 11 | 4.35451+ | 4.3573660 | **new record** (exactly verified) |
 | Squares covering triangles | 12 | 2√3 + √6 − √2 = 4.4993778 | 4.5062877 | **new record** (exactly verified) |
+| Triangles covering triangles | 2 | 1.0000000 | 1.0000000 | matches record |
+| Triangles covering triangles | 5 | 2.0000000 | 2.0000000 | matches record |
+| Triangles covering triangles | 6 | 2.3333333 | 2.3333333 | matches record |
+| Triangles covering triangles | 7 | 2.5000000 | 2.5000000 | matches record |
+| Triangles covering triangles | 8 | 2.6666667 | 2.6666667 | matches record |
+| Triangles covering triangles | 9 | 3.0000000 | 3.0000000 | matches record |
+| Triangles covering triangles | 10 | 3.0000000 | 3.0000000 | matches record |
+| Triangles covering triangles | 11 | 3.2500000 | 3.2500000 | matches record |
+| Triangles covering triangles | 12 | 3.3333333 | 3.3333333 | matches record |
+| Triangles covering triangles | 13 | 3.5000000 | 3.5000000 | matches record |
+| Triangles covering triangles | 14 | 3.6666667 | 3.6666667 | matches record |
+| Triangles covering triangles | 15 | 3.7500000 | 3.7500000 | matches record |
+| Squares covering squares | 6 | 4.0000000 | 4.0000000 | matches record |
+| Squares covering squares | 11 | 9.0000000 | 9.0000000 | matches record |
+| Squares covering squares | 12 | 9.08195+ | 9.0955856 | **new record** (exactly verified) |
+| Squares covering squares | 14 | 10.860+ | 10.8648250 | **new record** (exactly verified) |
+| Squares covering squares | 15 | 11.84721+ | 11.8473006 | **new record** (exactly verified) |

@@ -24,6 +24,14 @@ NAMES = {("tri", "square"): "Triangles covering squares (side s)",
          ("sq", "square"): "Squares covering squares (area A)"}
 
 
+def floor_fmt(x, digits=4):
+    """Round DOWN, with more digits for small gains, so gains are never overstated."""
+    import math
+    while digits < 8 and x < 10 ** (1 - digits):
+        digits += 1
+    return f"{math.floor(x * 10 ** digits) / 10 ** digits:.{digits}f}"
+
+
 def disp(key, v):
     """Displayed quantity: area for squares covering squares, else side/radius."""
     return v * v if key == ("sq", "square") else v
@@ -79,7 +87,7 @@ def main():
             _, bar = beats(key[0], key[1], n, val)
             recs, trunc = rec_str(key, n)
             dv, dr, db = disp(key, val), disp(key, rec), disp(key, bar)
-            gain = f"≥ +{dv - db:.4f}" if trunc else f"+{dv - dr:.6f}"
+            gain = f"≥ +{floor_fmt(dv - db)}" if trunc else f"+{floor_fmt(dv - dr, 6)}"
             lines.append(f"| {n} | {recs} | {who} | **{dv:.9f}** | {gain} | "
                          f"[svg](figures/{base}.svg) · [cert](certificates/{base}.json) |")
         lines.append("")

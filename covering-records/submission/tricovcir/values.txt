@@ -1,0 +1,3 @@
+n = 9: r = 1.01456  (certified lower bound 1.014569554)
+n = 11: r = 1.14249  (certified lower bound 1.142499341)
+n = 12: r = 1.18644  (certified lower bound 1.186440956)

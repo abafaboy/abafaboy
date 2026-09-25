@@ -21,12 +21,23 @@ from geom import piece_vertices
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
 PAGE = {("sq", "disk"): ("sqcovcir", "scc"), ("tri", "disk"): ("tricovcir", "tcc"),
-        ("tri", "square"): ("tricosqu", "tcs"), ("sq", "triangle"): ("squcotri", None),
-        ("tri", "triangle"): ("tricovtri", "tct"), ("sq", "square"): ("squcosqu", None)}
+        ("tri", "square"): ("tricosqu", "tcs"), ("sq", "triangle"): ("squcotri", "sct"),
+        ("tri", "triangle"): ("tricovtri", "tct"), ("sq", "square"): ("squcosqu", "scs")}
 GRAY, BLACK, WHITE = (206, 206, 206), (0, 0, 0), (255, 255, 255)
 
 
-def draw(cert, W, H):
+def page_gray(path):
+    """The target's fill colour in the picture being replaced (most common grey)."""
+    if not os.path.exists(path):
+        return GRAY
+    cols = sorted(Image.open(path).convert("RGB").getcolors(1 << 16), reverse=True)
+    for _, c in cols:
+        if c not in (WHITE, BLACK) and max(c) - min(c) < 12 and 150 < c[0] < 250:
+            return c
+    return GRAY
+
+
+def draw(cert, W, H, gray=GRAY):
     kind, target = cert["kind"], cert["target"]
     size = float(Fraction(cert["size"]))
     polys = [piece_vertices(kind, float(Fraction(p["x"])), float(Fraction(p["y"])),
@@ -49,12 +60,12 @@ def draw(cert, W, H):
     if target == "disk":
         (cx, cy) = T(0, 0)
         R = half * sc
-        d.ellipse([cx - R, cy - R, cx + R, cy + R], fill=GRAY)
+        d.ellipse([cx - R, cy - R, cx + R, cy + R], fill=gray)
     elif target == "triangle":
-        d.polygon([T(x, y) for x, y in tri], fill=GRAY)
+        d.polygon([T(x, y) for x, y in tri], fill=gray)
     else:
         a, b = T(-half, half), T(half, -half)
-        d.rectangle([a, b], fill=GRAY)
+        d.rectangle([a, b], fill=gray)
     for P in polys:
         pts = [T(x, y) for x, y in P]
         d.line(pts + [pts[0]], fill=BLACK, width=1)
@@ -74,7 +85,7 @@ def main(site):
         W, H = Image.open(orig).size if os.path.exists(orig) else (220, 220)
         out = os.path.join(ROOT, "submission", page)
         os.makedirs(out, exist_ok=True)
-        draw(cert, W, H).save(os.path.join(out, name))
+        draw(cert, W, H, page_gray(orig)).save(os.path.join(out, name))
         v = Fraction(cert["size"])
         if (cert["kind"], cert["target"]) == ("sq", "square"):
             v, what = v * v, "A"

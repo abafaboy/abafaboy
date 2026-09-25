@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="520" viewBox="0 0 520 520">
+<rect width="520" height="520" fill="white"/>
+<polygon points="193.54,62.69 62.69,62.69 62.69,193.54 193.54,193.54" fill="#4e79a7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="257.98,266.77 139.31,211.62 84.17,330.28 202.83,385.43" fill="#f28e2b" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="381.61,308.80 262.95,253.66 207.80,372.32 326.46,427.47" fill="#e15759" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="453.44,184.87 333.98,238.26 387.37,357.72 506.83,304.33" fill="#76b7b2" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="193.54,326.46 62.69,326.46 62.69,457.31 193.54,457.31" fill="#59a14f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="295.57,6.54 180.93,69.63 244.01,184.26 358.65,121.18" fill="#edc948" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="312.20,147.68 193.54,92.53 138.39,211.20 257.05,266.34" fill="#b07aa1" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="457.31,62.69 326.46,62.69 326.46,193.54 457.31,193.54" fill="#ff9da7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="275.99,335.74 161.35,398.82 224.43,513.46 339.07,450.37" fill="#9c755f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="435.83,189.72 317.17,134.57 262.02,253.23 380.69,308.38" fill="#bab0ac" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="132.63,162.28 13.17,215.67 66.56,335.13 186.02,281.74" fill="#4e79a7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="457.31,326.46 326.46,326.46 326.46,457.31 457.31,457.31" fill="#f28e2b" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<rect x="62.69" y="62.69" width="394.62" height="394.62" fill="none" stroke="black" stroke-width="2.5"/>
+<text x="8" y="510" font-family="sans-serif" font-size="15">n = 12, A = 9.095585625</text>
+</svg>
