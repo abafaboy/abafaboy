@@ -13,12 +13,33 @@ sys.path.insert(0, HERE)
 import make_cert  # noqa: E402
 import plot  # noqa: E402
 import verify  # noqa: E402
-from records import FORMULA, RECORDS, beats  # noqa: E402
+from records import FORMULA, RECORDS, TRUNC_STEP, beats  # noqa: E402
 
 ROOT = os.path.join(HERE, "..")
 NAMES = {("tri", "square"): "Triangles covering squares (side s)",
          ("sq", "disk"): "Squares covering circles (radius r)",
-         ("tri", "disk"): "Triangles covering circles (radius r)"}
+         ("tri", "disk"): "Triangles covering circles (radius r)",
+         ("sq", "triangle"): "Squares covering triangles (side s)",
+         ("tri", "triangle"): "Triangles covering triangles (side s)",
+         ("sq", "square"): "Squares covering squares (area A)"}
+
+
+def disp(key, v):
+    """Displayed quantity: area for squares covering squares, else side/radius."""
+    return v * v if key == ("sq", "square") else v
+
+
+def rec_str(key, n, digits=6):
+    rec, _ = RECORDS[key][n]
+    _, bar = beats(key[0], key[1], n, rec)
+    step = TRUNC_STEP.get((key[0], key[1], n))
+    if n in FORMULA.get(key, {}):
+        return f"{FORMULA[key][n]} = {disp(key, rec):.{digits}f}", False
+    if step:
+        return f"{disp(key, rec):.5f}+", True
+    if bar != rec:
+        return f"{disp(key, rec):.3f}+", True
+    return f"{disp(key, rec):.{digits}f}", False
 
 
 def main():
@@ -56,12 +77,10 @@ def main():
             if not new:
                 continue
             _, bar = beats(key[0], key[1], n, val)
-            trunc = bar != rec
-            recs = f"{rec:.3f}+" if trunc else f"{rec:.6f}"
-            if n in FORMULA.get(key, {}):
-                recs = f"{FORMULA[key][n]} = {rec:.6f}"
-            gain = f"≥ +{val - bar:.4f}" if trunc else f"+{val - rec:.6f}"
-            lines.append(f"| {n} | {recs} | {who} | **{val:.9f}** | {gain} | "
+            recs, trunc = rec_str(key, n)
+            dv, dr, db = disp(key, val), disp(key, rec), disp(key, bar)
+            gain = f"≥ +{dv - db:.4f}" if trunc else f"+{dv - dr:.6f}"
+            lines.append(f"| {n} | {recs} | {who} | **{dv:.9f}** | {gain} | "
                          f"[svg](figures/{base}.svg) · [cert](certificates/{base}.json) |")
         lines.append("")
     open(os.path.join(ROOT, "results", "table.md"), "w").write("\n".join(lines))
@@ -88,16 +107,16 @@ def write_all(rows):
             rec, who = RECORDS[key][n]
             _, bar = beats(key[0], key[1], n, val)
             trunc = bar != rec
-            recs = f"{rec:.3f}+" if trunc else f"{rec:.7f}"
+            recs, _t = rec_str(key, n, 7)
             if new:
                 status = "**new record** (exactly verified)"
             elif (trunc and rec <= val < bar) or (not trunc and abs(val - rec) < 1e-7):
-                status = "consistent with record (page gives 3 decimals)" if trunc else "matches record"
+                status = "consistent with record (page gives a truncated decimal)" if trunc else "matches record"
             elif val < rec:
-                status = f"below record by {rec - val:.4f}"
+                status = f"below record by {disp(key, rec) - disp(key, val):.4f}"
             else:
                 status = "above printed value, not by a certain margin"
-            out.append(f"| {name.split(' (')[0]} | {n} | {recs} | {val:.7f} | {status} |")
+            out.append(f"| {name.split(' (')[0]} | {n} | {recs} | {disp(key, val):.7f} | {status} |")
     open(os.path.join(ROOT, "results", "all.md"), "w").write("\n".join(out) + "\n")
 
 

@@ -30,8 +30,34 @@ jax.config.update("jax_enable_x64", True)
 
 from geom import PIECES  # noqa: E402
 
-SQ_EDGES = [((1.0, 0.0), 0.5), ((-1.0, 0.0), 0.5), ((0.0, 1.0), 0.5), ((0.0, -1.0), 0.5)]
-SQ_CORNERS = [(0.5, 0.5), (-0.5, 0.5), (-0.5, -0.5), (0.5, -0.5)]
+# Polygon targets of size 1 (side 1), centred at the origin, vertices CCW.
+_S3 = math.sqrt(3.0)
+POLY_VERTS = {
+    "square": [(0.5, -0.5), (0.5, 0.5), (-0.5, 0.5), (-0.5, -0.5)],
+    "triangle": [(0.0, 1 / _S3), (-0.5, -0.5 / _S3), (0.5, -0.5 / _S3)],
+}
+
+
+def _poly(target):
+    V = POLY_VERTS[target]
+    edges = []
+    for i in range(len(V)):
+        (x0, y0), (x1, y1) = V[i], V[(i + 1) % len(V)]
+        L = math.hypot(x1 - x0, y1 - y0)
+        u = ((y1 - y0) / L, -(x1 - x0) / L)            # outward normal of a CCW polygon
+        edges.append((u, u[0] * x0 + u[1] * y0))
+    return edges, V
+
+
+POLY = {t: _poly(t) for t in POLY_VERTS}
+SQ_EDGES, SQ_CORNERS = POLY["square"]
+
+
+def in_poly(target, px, py, tol=1e-12):
+    ok = np.ones_like(px, dtype=bool)
+    for (u, w) in POLY[target][0]:
+        ok &= u[0] * px + u[1] * py <= w + tol
+    return ok
 
 
 # ----------------------------------------------------------------------------
@@ -89,6 +115,8 @@ class _Meta:
         self.blocks, self.offsets, self.total = [], [], 0
 
     def add(self, typ, idx):
+        if len(idx) == 0:
+            return
         idx = np.asarray(idx, dtype=np.int64).reshape(len(idx), -1)
         self.blocks.append((typ, idx)); self.offsets.append(self.total)
         self.total += len(idx)
@@ -130,8 +158,8 @@ def candidates(kind, target, X):
     dsafe = np.where(ok, det, 1)
     px = (r0 * M11 - r1 * M01) / dsafe
     py = (M00 * r1 - M10 * r0) / dsafe
-    if target == "square":
-        inside = ok & (np.abs(px) <= 0.5 + 1e-12) & (np.abs(py) <= 0.5 + 1e-12)
+    if target in POLY:
+        inside = ok & in_poly(target, px, py)
     else:
         inside = ok & (px * px + py * py <= 1 + 1e-12)
     out_pts.append(np.stack([px[inside], py[inside]], 1)); meta.add("tri", T[inside])
@@ -140,19 +168,20 @@ def candidates(kind, target, X):
     PA, PB = pairs[:, 0], pairs[:, 1]
     d = a[PA] - a[PB]
     e = b[PB] - b[PA]
-    if target == "square":
-        # ties of two linear pieces on each side of the square, and the corners
-        for ei, (u, w) in enumerate(SQ_EDGES):
+    if target in POLY:
+        # ties of two linear pieces on each side of the polygon, and the corners
+        for ei, (u, w) in enumerate(POLY[target][0]):
             det = d[:, 0] * u[1] - d[:, 1] * u[0]
             ok = np.abs(det) > 1e-12
             dsafe = np.where(ok, det, 1)
             px = (e * u[1] - w * d[:, 1]) / dsafe
             py = (d[:, 0] * w - u[0] * e) / dsafe
-            inside = ok & (np.abs(px) <= 0.5 + 1e-12) & (np.abs(py) <= 0.5 + 1e-12)
+            inside = ok & in_poly(target, px, py)
             out_pts.append(np.stack([px[inside], py[inside]], 1))
             sel = pairs[inside]
             meta.add("edge", np.hstack([sel, np.full((len(sel), 1), ei)]))
-        out_pts.append(np.array(SQ_CORNERS)); meta.add("corner", np.arange(4)[:, None])
+        C = POLY[target][1]
+        out_pts.append(np.array(C)); meta.add("corner", np.arange(len(C))[:, None])
     else:
         # ties of two linear pieces on the circle, and each linear piece's
         # maximum over the circle
@@ -190,6 +219,15 @@ def sample_points(target, K):
         u = np.linspace(-0.5, 0.5, K)
         xx, yy = np.meshgrid(u, u)
         return np.stack([xx.ravel(), yy.ravel()], 1)
+    if target in POLY:
+        V = np.array(POLY[target][1])
+        lo, hi = V.min(0), V.max(0)
+        u = np.linspace(lo[0], hi[0], K); v = np.linspace(lo[1], hi[1], K)
+        xx, yy = np.meshgrid(u, v)
+        P = np.stack([xx.ravel(), yy.ravel()], 1)
+        P = P[in_poly(target, P[:, 0], P[:, 1], 1e-9)]
+        B = [V[i] + (V[(i + 1) % len(V)] - V[i]) * t for i in range(len(V)) for t in np.linspace(0, 1, K, endpoint=False)]
+        return np.concatenate([P, np.array(B)])
     pts = [np.zeros((1, 2))]
     rings = K // 2
     for r in np.linspace(1.0 / rings, 1.0, rings):
@@ -267,14 +305,14 @@ def make_vals(kind, target, n, meta_list):
             outs.append(ax[:, A] * px + ay[:, A] * py + b[:, A])
         if "edge" in G:
             A, B_, E = G["edge"][:, 0], G["edge"][:, 1], G["edge"][:, 2]
-            U = np.array([SQ_EDGES[e][0] for e in E]); W = np.array([SQ_EDGES[e][1] for e in E])
+            U = np.array([POLY[target][0][e][0] for e in E]); W = np.array([POLY[target][0][e][1] for e in E])
             d0 = ax[:, A] - ax[:, B_]; d1 = ay[:, A] - ay[:, B_]; e_ = b[:, B_] - b[:, A]
             det = d0 * U[:, 1] - d1 * U[:, 0]
             px = (e_ * U[:, 1] - W * d1) / det
             py = (d0 * W - U[:, 0] * e_) / det
             outs.append(ax[:, A] * px + ay[:, A] * py + b[:, A])
         if "corner" in G:
-            Q = np.array([SQ_CORNERS[c] for c in G["corner"][:, 0]])
+            Q = np.array([POLY[target][1][c] for c in G["corner"][:, 0]])
             F_ = G["corner"][:, 1]           # index of active linear function
             outs.append(ax[:, F_] * Q[:, 0] + ay[:, F_] * Q[:, 1] + b[:, F_])
         if "dpair" in G:
@@ -382,6 +420,13 @@ def polish(kind, target, X, rounds=200, tol=None, verbose=False):
 def random_start(rng, target, n, lam_guess):
     if target == "square":
         c = rng.uniform(-0.5, 0.5, size=(n, 2))
+    elif target in POLY:
+        V = np.array(POLY[target][1]); lo, hi = V.min(0), V.max(0)
+        c = np.zeros((0, 2))
+        while len(c) < n:
+            P = rng.uniform(lo, hi, size=(4 * n, 2))
+            c = np.concatenate([c, P[in_poly(target, P[:, 0], P[:, 1])]])
+        c = c[:n]
     else:
         r = np.sqrt(rng.uniform(0, 1, n)); th = rng.uniform(0, 2 * math.pi, n)
         c = np.stack([r * np.cos(th), r * np.sin(th)], 1)

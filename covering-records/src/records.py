@@ -75,8 +75,13 @@ TRUNCATED = {("sq", "disk"): {3, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18}
 
 
 def beats(kind, target, n, value):
+    """True if `value` (side or radius) certainly beats the page's record."""
     rec = RECORDS[(kind, target)][n][0]
-    bar = rec + 0.001 if n in TRUNCATED.get((kind, target), ()) else rec
+    step = TRUNC_STEP.get((kind, target, n), 0.001 if n in TRUNCATED.get((kind, target), ()) else 0.0)
+    if (kind, target) == ("sq", "square"):
+        bar = sqrt(rec * rec + step)        # truncation is in the printed AREA
+    else:
+        bar = rec + step
     return value > bar + 1e-12, bar
 
 
@@ -95,8 +100,68 @@ if __name__ == "__main__":
             assert v <= exact < v + 0.001 + 1e-12, (key, n, v, exact)
     print("closed forms match the printed truncations")
 
+
+# ---------------------------------------------------------------------------
+# Pages added later (same source, same date).
+#   packing/squcotri/  Squares Covering Triangles  -> side s of the triangle
+#   packing/tricovtri/ Triangles Covering Triangles -> side s of the triangle
+#   packing/squcosqu/  Squares Covering Squares     -> AREA A of the square
+# For squares covering squares we store the side sqrt(A); report.py shows A.
+from math import floor
+
+RECORDS[("sq", "triangle")] = {
+    1: (sqrt(6) - sqrt(2), "Trivial"),
+    2: (1.322, "Maurizio Morandi, Mar 2009"),
+    3: (2.108, "David Cantrell, Aug 2002"),
+    4: (4 / s3, "David Cantrell, Aug 2002"),
+    5: (2.534, "Maurizio Morandi, Apr 2009"),
+    6: (3.168, "David Cantrell, Aug 2002"),
+    7: (3.327, "Maurizio Morandi, May 2009"),
+    8: (3.495, "Maurizio Morandi, Apr 2009"),
+    9: (3.711, "Maurizio Morandi, May 2009"),
+    10: (4.197, "Maurizio Morandi, Apr 2009"),
+    11: (4.35451, "Ryan Chi and d/dx, Sep 2026"),
+    12: (2 * s3 + sqrt(6) - sqrt(2), "Maurizio Morandi, May 2009"),
+}
+TRUNCATED[("sq", "triangle")] = {2, 3, 5, 6, 7, 8, 9, 10}
+TRUNC_STEP = {("sq", "triangle", 11): 1e-5}
+
+_tct = {1: 1, 3: 1.5, 4: 2, 6: 7 / 3, 7: 2.5, 8: 8 / 3, 9: 3, 11: 3.25, 12: 10 / 3, 13: 3.5, 14: 11 / 3, 15: 3.75}
+_tct_who = {1: "Trivial", 3: "Trivial", 4: "Trivial", 6: "David Cantrell, Aug 2002", 7: "Erich Friedman, 1999",
+            8: "David Cantrell, Aug 2002", 9: "Trivial", 11: "Erich Friedman, 1999", 12: "Erich Friedman, 1999",
+            13: "Erich Friedman, 1999", 14: "David Cantrell, Aug 2002", 15: "Erich Friedman, 1999"}
+RECORDS[("tri", "triangle")] = {}
+for _n in range(1, 16):
+    _m = max(k for k in _tct if k <= _n)       # unlisted n: best known is the previous n's value
+    RECORDS[("tri", "triangle")][_n] = (_tct[_m], _tct_who[_m] if _m == _n else f"same as n={_m} (not listed)")
+
+_sqsq = {3: (0.5 + sqrt(5) / 2, "Dudeney, 1931"), 7: (11 / 4 + 3 / sqrt(2), "Trevor Green, Sep 2000"),
+         8: (3 + 2 * sqrt(2), "Trevor Green, Sep 2000"), 12: (9.08195, "Ryan Chi, Sep 2026"),
+         13: (5.5 + 3 * sqrt(2), "David Paterson, Jul 2002"), 14: (10.860, "Michael Kearney, Jul 2002"),
+         15: (11.84721, "Ryan Chi, Sep 2026"), 21: (8.5 + 6 * sqrt(2), "David Paterson, Jul 2002"),
+         22: (17.821, "David Cantrell, Aug 2002"), 23: (19.001, "David Cantrell, Jul 2002"),
+         24: (20.008, "Maurizio Morandi, Oct 2010"), 31: (25.527, "David Paterson, Sep 2002"),
+         32: (83 / 4 + 9 / sqrt(2), "David Paterson, Sep 2002"), 33: (27.988, "Maurizio Morandi, Oct 2010"),
+         34: (18 + 8 * sqrt(2), "David Paterson, Sep 2002"), 35: (30.247, "Maurizio Morandi, Oct 2010"),
+         43: (36.608, "David Paterson, Sep 2002"), 44: (20.5 + 12 * sqrt(2), "David Paterson, Sep 2002"),
+         45: (39.042, "David Paterson, Sep 2002"), 46: (39.77036, "Ryan Chi and d/dx, Sep 2026"),
+         47: (41.34484, "Ryan Chi and d/dx, Sep 2026"), 48: (42.61222, "Ryan Chi and d/dx, Sep 2026")}
+SQSQ_AREA = {}
+RECORDS[("sq", "square")] = {}
+for _n in range(1, 49):
+    if _n in _sqsq:
+        A, who = _sqsq[_n]
+    else:
+        A, who = float(floor(sqrt(_n)) ** 2), "trivial covering (page: no tilted squares known)"
+    SQSQ_AREA[_n] = A
+    RECORDS[("sq", "square")][_n] = (sqrt(A), who)
+TRUNCATED[("sq", "square")] = {14, 22, 23, 24, 31, 33, 35, 43, 45}
+for _n in (12, 15, 46, 47, 48):
+    TRUNC_STEP[("sq", "square", _n)] = 1e-5
+
 # Closed forms as printed on the pages, for display.
 FORMULA = {
     ("tri", "square"): {10: "5/√3 − 1", 11: "√3 + 1/4", 12: "(7√3 + 15)/13"},
     ("tri", "disk"): {9: "(81√3 − 6√30)/106", 11: "(177√3 − 2√586)/226", 12: "(7√3 − √7)/8"},
+    ("sq", "triangle"): {1: "√6 − √2", 4: "4/√3", 12: "2√3 + √6 − √2"},
 }

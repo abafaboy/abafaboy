@@ -42,6 +42,10 @@ def check(cert):
     if target == "square":
         h = size / 2 * (1 - 1e-7)
         T = Polygon([(-h, -h), (h, -h), (h, h), (-h, h)])
+    elif target == "triangle":
+        a = size * (1 - 1e-7)
+        s3 = math.sqrt(3)
+        T = Polygon([(0, a / s3), (-a / 2, -a / (2 * s3)), (a / 2, -a / (2 * s3))])
     else:
         N = 20000
         R = size * (1 - 1e-7) / math.cos(math.pi / N)

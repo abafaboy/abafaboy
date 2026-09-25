@@ -21,7 +21,8 @@ from geom import piece_vertices
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
 PAGE = {("sq", "disk"): ("sqcovcir", "scc"), ("tri", "disk"): ("tricovcir", "tcc"),
-        ("tri", "square"): ("tricosqu", "tcs")}
+        ("tri", "square"): ("tricosqu", "tcs"), ("sq", "triangle"): ("squcotri", None),
+        ("tri", "triangle"): ("tricovtri", "tct"), ("sq", "square"): ("squcosqu", None)}
 GRAY, BLACK, WHITE = (206, 206, 206), (0, 0, 0), (255, 255, 255)
 
 
@@ -31,8 +32,10 @@ def draw(cert, W, H):
     polys = [piece_vertices(kind, float(Fraction(p["x"])), float(Fraction(p["y"])),
                             2 * math.atan(float(Fraction(p["t"])))) for p in cert["pieces"]]
     half = size / 2 if target == "square" else size
-    xs = [x for P in polys for x, _ in P] + [-half, half]
-    ys = [y for P in polys for _, y in P] + [-half, half]
+    s3 = math.sqrt(3)
+    tri = [(0, size / s3), (-size / 2, -size / (2 * s3)), (size / 2, -size / (2 * s3))]
+    xs = [x for P in polys for x, _ in P] + ([p[0] for p in tri] if target == "triangle" else [-half, half])
+    ys = [y for P in polys for _, y in P] + ([p[1] for p in tri] if target == "triangle" else [-half, half])
     x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
     sc = min((W - 3) / (x1 - x0), (H - 3) / (y1 - y0))
     ox = (W - sc * (x1 - x0)) / 2
@@ -47,6 +50,8 @@ def draw(cert, W, H):
         (cx, cy) = T(0, 0)
         R = half * sc
         d.ellipse([cx - R, cy - R, cx + R, cy + R], fill=GRAY)
+    elif target == "triangle":
+        d.polygon([T(x, y) for x, y in tri], fill=GRAY)
     else:
         a, b = T(-half, half), T(half, -half)
         d.rectangle([a, b], fill=GRAY)
@@ -61,14 +66,21 @@ def main(site):
     for path in sorted(glob.glob(os.path.join(ROOT, "certificates", "*.json"))):
         cert = json.load(open(path))
         page, prefix = PAGE[(cert["kind"], cert["target"])]
-        name = f"{prefix}{cert['n']}.gif"
+        if prefix is None:     # these pages name pictures 1.gif, 2.gif, ...
+            name = f"{cert['n']}.gif"
+        else:
+            name = f"{prefix}{cert['n']}.gif"
         orig = os.path.join(site, "packing", page, name)
         W, H = Image.open(orig).size if os.path.exists(orig) else (220, 220)
         out = os.path.join(ROOT, "submission", page)
         os.makedirs(out, exist_ok=True)
         draw(cert, W, H).save(os.path.join(out, name))
         v = Fraction(cert["size"])
-        by_page.setdefault(page, []).append(f"n = {cert['n']}: {math.floor(v * 10**5) / 10**5:.5f}  "
+        if (cert["kind"], cert["target"]) == ("sq", "square"):
+            v, what = v * v, "A"
+        else:
+            what = "r" if cert["target"] == "disk" else "s"
+        by_page.setdefault(page, []).append(f"n = {cert['n']}: {what} = {math.floor(v * 10**5) / 10**5:.5f}  "
                                             f"(certified lower bound {float(v):.9f})")
     for page, lines in by_page.items():
         open(os.path.join(ROOT, "submission", page, "values.txt"), "w").write("\n".join(lines) + "\n")

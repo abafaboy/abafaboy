@@ -173,6 +173,11 @@ def verify(cert, log=print):
         h = K(size / 2)
         box = [(-h, -h), (h, -h), (h, h), (-h, h)]
         xlo, xhi = -h, h
+    elif target == "triangle":
+        # equilateral triangle of side `size`, centroid at the origin, apex up
+        s_ = K(size)
+        box = [(K(0), s_ * K(0, Q(1, 3))), (-s_ / 2, -s_ * K(0, Q(1, 6))), (s_ / 2, -s_ * K(0, Q(1, 6)))]
+        xlo, xhi = -s_ / 2, s_ / 2
     elif target == "disk":
         r = K(size)
         r2 = r * r
@@ -224,6 +229,10 @@ def verify(cert, log=print):
             px, py = xm, (y0 + y1) / 2
             if target == "square":
                 if not (-h < py < h):
+                    continue
+            elif target == "triangle":
+                # cell lies inside or outside the target (its sides are segments)
+                if not inside(box, px, py):
                     continue
             else:
                 # does this cell meet the open disk? cell corners at x0, x1

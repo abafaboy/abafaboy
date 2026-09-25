@@ -23,3 +23,11 @@
 | 9 | (81√3 − 6√30)/106 = 1.013517 | David Cantrell, Jul 2005 | **1.014569554** | +0.001053 | [svg](figures/tri_disk_09.svg) · [cert](certificates/tri_disk_09.json) |
 | 11 | (177√3 − 2√586)/226 = 1.142293 | David Cantrell, Jul 2005 | **1.142499341** | +0.000207 | [svg](figures/tri_disk_11.svg) · [cert](certificates/tri_disk_11.json) |
 | 12 | (7√3 − √7)/8 = 1.184826 | David Cantrell, Jul 2005 | **1.186440956** | +0.001615 | [svg](figures/tri_disk_12.svg) · [cert](certificates/tri_disk_12.json) |
+
+### Squares covering triangles (side s)
+
+| n | previous record | holder | new value (verified) | improvement | files |
+|---|---|---|---|---|---|
+| 10 | 4.197+ | Maurizio Morandi, Apr 2009 | **4.204241869** | ≥ +0.0062 | [svg](figures/sq_triangle_10.svg) · [cert](certificates/sq_triangle_10.json) |
+| 11 | 4.35451+ | Ryan Chi and d/dx, Sep 2026 | **4.357365966** | ≥ +0.0028 | [svg](figures/sq_triangle_11.svg) · [cert](certificates/sq_triangle_11.json) |
+| 12 | 2√3 + √6 − √2 = 4.499378 | Maurizio Morandi, May 2009 | **4.506287746** | +0.006910 | [svg](figures/sq_triangle_12.svg) · [cert](certificates/sq_triangle_12.json) |
