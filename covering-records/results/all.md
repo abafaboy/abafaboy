@@ -73,3 +73,5 @@
 | Squares covering squares | 18 | 16.0000000 | 15.9999999 | matches record |
 | Squares covering squares | 19 | 16.0000000 | 15.9999999 | matches record |
 | Squares covering squares | 20 | 16.0000000 | 15.9999999 | matches record |
+| Squares covering squares | 22 | 17.821+ | 17.8217357 | consistent with record (page gives a truncated decimal) |
+| Squares covering squares | 23 | 19.001+ | 19.0246181 | **new record** (exactly verified) |

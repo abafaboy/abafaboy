@@ -15,7 +15,7 @@ with no floating point).
 A better value is not automatically a new design, so every result was compared
 piece by piece with the record picture it beats ([docs/ORIGINALITY.md](docs/ORIGINALITY.md)):
 
-- **<!-- COUNT -->5<!-- /COUNT --> are new configurations:** different
+- **<!-- COUNT -->6<!-- /COUNT --> are new configurations:** different
   arrangements from the current picture.
 - **11 are re-optimisations:** the same arrangement as the current record with
   the pieces moved slightly. The old hand-made configurations were not fully
@@ -63,6 +63,12 @@ are truncated, never rounded up.
 |---|---|---|---|---|---|
 | 12 | 2√3 + √6 − √2 = 4.499378 | Maurizio Morandi, May 2009 | **4.506287745** | +0.006909 | [svg](figures/sq_triangle_12.svg) · [cert](certificates/sq_triangle_12.json) |
 
+### Squares covering squares (area A)
+
+| n | previous record | holder | new value (verified) | improvement | files |
+|---|---|---|---|---|---|
+| 23 | 19.001+ | David Cantrell, Jul 2002 | **19.024618102** | ≥ +0.0226 | [svg](figures/sq_square_23.svg) · [cert](certificates/sq_square_23.json) |
+
 ### Re-optimised versions of the current record arrangements
 
 Each of these beats the current value, and is verified exactly like the new records above. But independent reviewers, matching pieces one-to-one under rotations and reflections, found each configuration to be the same arrangement as the current record's picture with the pieces moved slightly. The design belongs to the original finder, so these are reported as re-optimisations, not as new configurations (see docs/ORIGINALITY.md).
@@ -76,6 +82,9 @@ Each of these beats the current value, and is verified exactly like the new reco
 | Triangles covering circles | 11 | (177√3 − 2√586)/226 = 1.142293 | David Cantrell, Jul 2005 | 1.142499341 | [svg](figures/tri_disk_11.svg) · [cert](certificates/tri_disk_11.json) |
 | Squares covering triangles | 10 | 4.197+ | Maurizio Morandi, Apr 2009 | 4.204241869 | [svg](figures/sq_triangle_10.svg) · [cert](certificates/sq_triangle_10.json) |
 | Squares covering triangles | 11 | 4.35451+ | Ryan Chi and d/dx, Sep 2026 | 4.357365965 | [svg](figures/sq_triangle_11.svg) · [cert](certificates/sq_triangle_11.json) |
+| Squares covering squares | 12 | 9.08195+ | Ryan Chi, Sep 2026 | 9.095585625 | [svg](figures/sq_square_12.svg) · [cert](certificates/sq_square_12.json) |
+| Squares covering squares | 14 | 10.860+ | Michael Kearney, Jul 2002 | 10.864825012 | [svg](figures/sq_square_14.svg) · [cert](certificates/sq_square_14.json) |
+| Squares covering squares | 15 | 11.84721+ | Ryan Chi, Sep 2026 | 11.847300633 | [svg](figures/sq_square_15.svg) · [cert](certificates/sq_square_15.json) |
 
 <!-- /TABLE -->
 
