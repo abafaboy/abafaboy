@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="520" viewBox="0 0 520 520">
+<rect width="520" height="520" fill="white"/>
+<polygon points="302.82,147.77 155.34,233.76 303.55,318.49" fill="#4e79a7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="302.76,132.57 303.49,303.28 450.96,217.29" fill="#f28e2b" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="156.02,234.15 156.75,404.86 304.23,318.87" fill="#e15759" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="303.40,284.02 304.13,454.74 451.61,368.75" fill="#76b7b2" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="156.01,233.37 8.54,319.36 156.74,404.08" fill="#59a14f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="248.22,35.79 100.75,121.77 248.95,206.50" fill="#edc948" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="77.09,108.25 77.82,278.96 225.30,192.98" fill="#b07aa1" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="303.55,319.26 156.08,405.25 304.28,489.98" fill="#ff9da7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="467.60,207.59 320.12,293.58 468.33,378.31" fill="#9c755f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="463.44,54.13 315.96,140.11 464.17,224.84" fill="#bab0ac" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="248.11,8.54 248.84,179.25 396.31,93.26" fill="#4e79a7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<circle cx="272.73" cy="247.27" r="195.04" fill="none" stroke="black" stroke-width="2.5"/>
+<text x="8" y="510" font-family="sans-serif" font-size="15">n = 11, r = 1.142499341</text>
+</svg>

@@ -1,0 +1,4 @@
+n = 7: 1.24188  (certified lower bound 1.241885665)
+n = 8: 1.37642  (certified lower bound 1.376427184)
+n = 12: 1.71239  (certified lower bound 1.712399285)
+n = 13: 1.78149  (certified lower bound 1.781493254)
