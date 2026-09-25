@@ -8,7 +8,7 @@ long-running table of best-known packings and coverings. On its covering pages,
 most records were set between 1997 and 2009 by hand or with small programs.
 
 This repo contains an optimizer that re-finds most of those records, and beats
-the current value in 16 cases on five pages. It also contains two independently
+the current value in 18 cases on five pages. It also contains two independently
 written verifiers that prove each covering in exact arithmetic (rationals and √3,
 with no floating point).
 
@@ -17,10 +17,11 @@ piece by piece with the record picture it beats ([docs/ORIGINALITY.md](docs/ORIG
 
 - **<!-- COUNT -->6<!-- /COUNT --> are new configurations:** different
   arrangements from the current picture.
-- **11 are re-optimisations:** the same arrangement as the current record with
+- **12 are re-optimisations:** the same arrangement as the current record with
   the pieces moved slightly. The old hand-made configurations were not fully
   optimized. These are listed separately, and the design is credited to its
-  original finder.
+  original finder. One of them (15 squares covering a square) gains too little
+  to be worth submitting.
 
 | page | question |
 |---|---|
@@ -75,6 +76,8 @@ Each of these beats the current value, and is verified exactly like the new reco
 
 | problem | n | current record | holder | re-optimised value (verified) | files |
 |---|---|---|---|---|---|
+| Triangles covering squares | 10 | 5/√3 − 1 = 1.886751 | Maurizio Morandi, Apr 2009 | 1.888704817 | [svg](figures/tri_square_10.svg) · [cert](certificates/tri_square_10.json) |
+| Triangles covering squares | 11 | √3 + 1/4 = 1.982051 | Maurizio Morandi, Apr 2009 | 1.983717454 | [svg](figures/tri_square_11.svg) · [cert](certificates/tri_square_11.json) |
 | Squares covering circles | 7 | 1.239+ | David Cantrell, Jul 2002 | 1.241885665 | [svg](figures/sq_disk_07.svg) · [cert](certificates/sq_disk_07.json) |
 | Squares covering circles | 8 | 1.375+ | Maurizio Morandi, Mar 2009 | 1.376427183 | [svg](figures/sq_disk_08.svg) · [cert](certificates/sq_disk_08.json) |
 | Squares covering circles | 13 | 1.779+ | Maurizio Morandi, Apr 2009 | 1.781493253 | [svg](figures/sq_disk_13.svg) · [cert](certificates/sq_disk_13.json) |
@@ -135,7 +138,8 @@ size is covered, and the true optimum of each configuration is higher by about
 What has **not** been done: nobody outside this repo has checked these yet. The
 16 submitted pictures and the email text
 ([`submission/email.txt`](submission/email.txt)) were sent to Erich Friedman on
-25 September 2026, following
+25 September 2026, and 23 squares covering a square, found later that day,
+followed in a second email ([`submission/email2.txt`](submission/email2.txt)), following
 [his guidelines](https://erich-friedman.github.io/packing/submit.html). Nothing
 counts as a record until he accepts it and updates the pages.
 

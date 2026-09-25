@@ -39,6 +39,7 @@ arrangement*.
 | triangles covering circles, n = 9 | same family, different arrangement | 0.17–0.19 (6 of 9 pieces turned 23–37°) | 1 picture + 2 quantitative |
 | triangles covering circles, n = 12 | same family, different arrangement | 0.55–0.72 | 1 picture + 2 quantitative |
 | squares covering triangles, n = 12 | same family, different arrangement | 0.43–0.44 | 2 quantitative vs 1 picture ("same") |
+| squares covering squares, n = 23 | new arrangement | 1.41–1.42 (tilted squares along two edges in the old picture, a diagonal band through the middle in the new one) | 1 picture + 2 quantitative, all "new" |
 | squares covering circles, n = 7 | same arrangement, re-optimised | 0.06 | all 3 |
 | squares covering circles, n = 8 | same arrangement, re-optimised | 0.02 | all 3 |
 | squares covering circles, n = 13 | same arrangement, re-optimised | 0.14–0.17 | all 3 |
@@ -57,8 +58,9 @@ showed they were the old figure turned or reflected.
 
 ## What this means for the claims
 
-- The **five different arrangements** are the only coverings presented as new
-  configurations.
+- The **six different arrangements** are the only coverings presented as new
+  configurations. Five went in the first email; 23 squares covering a square was
+  found later the same day and sent separately.
 - The **eleven re-optimisations** still cover larger targets than the records,
   because the hand-made 2002–2009 configurations were not fully optimized. They
   are reported as better-optimized versions of the existing arrangements. The

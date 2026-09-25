@@ -30,6 +30,8 @@ Each of these beats the current value, and is verified exactly like the new reco
 
 | problem | n | current record | holder | re-optimised value (verified) | files |
 |---|---|---|---|---|---|
+| Triangles covering squares | 10 | 5/√3 − 1 = 1.886751 | Maurizio Morandi, Apr 2009 | 1.888704817 | [svg](figures/tri_square_10.svg) · [cert](certificates/tri_square_10.json) |
+| Triangles covering squares | 11 | √3 + 1/4 = 1.982051 | Maurizio Morandi, Apr 2009 | 1.983717454 | [svg](figures/tri_square_11.svg) · [cert](certificates/tri_square_11.json) |
 | Squares covering circles | 7 | 1.239+ | David Cantrell, Jul 2002 | 1.241885665 | [svg](figures/sq_disk_07.svg) · [cert](certificates/sq_disk_07.json) |
 | Squares covering circles | 8 | 1.375+ | Maurizio Morandi, Mar 2009 | 1.376427183 | [svg](figures/sq_disk_08.svg) · [cert](certificates/sq_disk_08.json) |
 | Squares covering circles | 13 | 1.779+ | Maurizio Morandi, Apr 2009 | 1.781493253 | [svg](figures/sq_disk_13.svg) · [cert](certificates/sq_disk_13.json) |

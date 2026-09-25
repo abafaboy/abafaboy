@@ -81,11 +81,13 @@ def main():
     lines = []
     refined = []
     for key, name in NAMES.items():
-        if key not in rows or not any(v[2] and (key[0], key[1], n) not in REFINEMENTS for n, v in rows[key].items()):
+        if key not in rows:
             continue
-        lines.append(f"### {name}\n")
-        lines.append("| n | previous record | holder | new value (verified) | improvement | files |")
-        lines.append("|---|---|---|---|---|---|")
+        # re-optimised rows are collected for every page, even one with no new record
+        if any(v[2] and (key[0], key[1], n) not in REFINEMENTS for n, v in rows[key].items()):
+            lines.append(f"### {name}\n")
+            lines.append("| n | previous record | holder | new value (verified) | improvement | files |")
+            lines.append("|---|---|---|---|---|---|")
         for n in sorted(rows[key]):
             val, base, new = rows[key][n]
             rec, who = RECORDS[key][n]
@@ -102,7 +104,8 @@ def main():
             gain = f"≥ +{floor_fmt(dv - db)}" if trunc else f"+{floor_fmt(dv - dr, 6)}"
             lines.append(f"| {n} | {recs} | {who} | **{trunc_str(dv, 9)}** | {gain} | "
                          f"[svg](figures/{base}.svg) · [cert](certificates/{base}.json) |")
-        lines.append("")
+        if lines and lines[-1] != "":
+            lines.append("")
     if refined:
         lines.append("### Re-optimised versions of the current record arrangements\n")
         lines.append("Each of these beats the current value, and is verified exactly like the new records above. But "
