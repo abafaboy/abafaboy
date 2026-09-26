@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="520" viewBox="0 0 520 520">
+<rect width="520" height="520" fill="white"/>
+<polygon points="498.48,275.06 373.09,272.40 370.43,397.78 495.81,400.45" fill="#4e79a7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="244.89,20.67 119.53,24.19 123.05,149.55 248.41,146.03" fill="#f28e2b" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="244.99,146.13 119.58,146.13 119.58,271.54 244.99,271.54" fill="#e15759" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="207.85,312.15 82.44,312.15 82.44,437.56 207.85,437.56" fill="#76b7b2" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="218.22,236.29 118.36,312.15 194.22,412.02 294.08,336.15" fill="#59a14f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="513.73,414.18 414.19,337.90 337.91,437.44 437.45,513.72" fill="#edc948" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="366.28,400.42 266.41,324.56 190.55,424.43 290.42,500.28" fill="#b07aa1" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="495.81,24.19 370.40,24.19 370.40,149.60 495.81,149.60" fill="#ff9da7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="370.40,24.19 244.99,24.19 244.99,149.60 370.40,149.60" fill="#9c755f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="119.58,153.73 19.72,229.59 95.58,329.45 195.44,253.59" fill="#bab0ac" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="373.04,275.01 247.63,275.01 247.63,400.42 373.04,400.42" fill="#4e79a7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="495.81,149.60 370.40,149.60 370.40,275.01 495.81,275.01" fill="#f28e2b" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="105.81,6.28 6.27,82.57 82.56,182.11 182.10,105.81" fill="#e15759" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="370.40,149.60 244.99,149.60 244.99,275.01 370.40,275.01" fill="#76b7b2" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<rect x="82.44" y="24.19" width="413.37" height="413.37" fill="none" stroke="black" stroke-width="2.5"/>
+<text x="8" y="510" font-family="sans-serif" font-size="15">n = 14, A = 10.864825012</text>
+</svg>

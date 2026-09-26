@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="520" viewBox="0 0 520 520">
+<rect width="520" height="520" fill="white"/>
+<polygon points="209.38,313.35 159.96,284.81 131.43,334.23 180.85,362.76" fill="#4e79a7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="292.95,168.60 243.53,197.13 272.06,246.55 321.48,218.02" fill="#f28e2b" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="189.51,233.63 149.09,273.90 189.36,314.33 229.79,274.05" fill="#e15759" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="306.87,239.86 252.26,223.32 235.72,277.93 290.33,294.47" fill="#76b7b2" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="280.89,189.49 231.47,160.96 202.94,210.37 252.35,238.91" fill="#59a14f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="360.04,284.81 310.62,313.35 339.15,362.76 388.57,334.23" fill="#edc948" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="340.21,214.21 284.29,225.57 295.65,281.49 351.57,270.14" fill="#b07aa1" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="251.70,225.14 197.09,208.60 180.55,263.22 235.16,279.76" fill="#ff9da7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="254.40,277.19 197.34,277.17 197.32,334.23 254.38,334.25" fill="#9c755f" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="309.42,140.07 260.00,111.54 231.47,160.96 280.89,189.49" fill="#bab0ac" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="356.84,269.07 300.92,280.42 312.28,336.34 368.20,324.99" fill="#4e79a7" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="305.11,277.57 248.45,284.30 255.18,340.97 311.85,334.23" fill="#f28e2b" fill-opacity="0.55" stroke="#333" stroke-width="1"/>
+<polygon points="260.00,111.54 131.43,334.23 388.57,334.23" fill="none" stroke="black" stroke-width="2.5"/>
+<text x="8" y="510" font-family="sans-serif" font-size="15">n = 12, s = 4.506287745</text>
+</svg>

@@ -1,0 +1,3 @@
+n = 10: s = 4.20424  (certified lower bound 4.204241869)
+n = 11: s = 4.35736  (certified lower bound 4.357365966)
+n = 12: s = 4.50628  (certified lower bound 4.506287746)

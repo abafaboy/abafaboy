@@ -1,0 +1,17 @@
+Hi Erich,
+
+One more improvement, found after my earlier email today ("Covering pages: 5 new configurations and 11 re-optimised ones"):
+
+Squares Covering Squares (page squcosqu, picture scs23.gif)
+  n = 23: A = 19.02461   [current: 19.001+, David Cantrell, Jul 2002]
+
+This is a new arrangement, not a re-optimised copy of the current picture. In the current picture the tilted squares run along two edges of the target; in this one they form a band along the diagonal through the middle, with axis-aligned squares in all four corners.
+
+It was found by the same computer search as the others (run with Claude Code) and checked the same way: the value is a certified lower bound, proved by an exact-arithmetic program and confirmed by a second, independently written exact checker. The exact coordinates are in the same GitHub repository: abafaboy/abafaboy, branch claude/new-session-nd3rcp, folder covering-records, file certificates/sq_square_23.json.
+
+Your guidelines ask for batches that span several pages to be sorted into folders by page, so each of the five attached zips holds one page folder with its pictures and a values.txt. Besides the new scs23.gif (in the squcosqu folder), they contain the 16 pictures from my earlier email, unchanged, so everything is in one place in the format you ask for.
+
+Name for attribution: Abdulfayyod Mukhamedov
+
+Best regards,
+Abdulfayyod Mukhamedov

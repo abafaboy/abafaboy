@@ -1,0 +1,6 @@
+n = 7: r = 1.24188  (certified lower bound 1.241885665)
+n = 8: r = 1.37642  (certified lower bound 1.376427184)
+n = 12: r = 1.71239  (certified lower bound 1.712399285)
+n = 13: r = 1.78149  (certified lower bound 1.781493254)
+n = 17: r = 2.04718  (certified lower bound 2.047182901)
+n = 18: r = 2.12480  (certified lower bound 2.124808708)
