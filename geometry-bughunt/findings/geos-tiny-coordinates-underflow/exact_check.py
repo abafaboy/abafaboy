@@ -64,3 +64,23 @@ c = indep.contact_params((S2, F(0)), (S2, S2), (S1, S1), (S3, S1))
 pt = (S2, 0 + c[0] * (S2 - 0)) if len(c) == 1 else None
 print("   contact parameters:", [str(t) for t in c], "-> point", pt and (float(pt[0]), float(pt[1])),
       "== (2e-200, 1e-200):", pt == (S2, S1))
+
+print("\n7. primitives_scaling.c: exact orientation of the three triples")
+import math  # noqa: E402
+TRIPLES = [("A=(0 0) B=(1 0) P=(0 1)", (0.0, 0.0, 1.0, 0.0, 0.0, 1.0)),
+           ("A=(-1.6 1.2) B=(-3.2 -1.8) P=(-6.4 -7.8)", (-1.6, 1.2, -3.2, -1.8, -6.4, -7.8)),
+           ("A=(0 0) B=(1 1) P=(2 2+2^-40)", (0.0, 0.0, 1.0, 1.0, 2.0, 2.0 + 2.0 ** -40))]
+KS = [0, -400, -500, -505, -510, -514, -520, -530, -537, -538, -540, -600, -1000,
+      400, 500, 505, 508, 510, 512, 600, 1000]
+for name, t in TRIPLES:
+    signs = set()
+    for k in KS:
+        s = [math.ldexp(v, k) for v in t]
+        assert all(math.ldexp(v, -k) == w for v, w in zip(s, t)), "scaling not exact"
+        ax, ay, bx, by, px, py = map(F, s)
+        det = (bx - ax) * (py - by) - (by - ay) * (px - bx)
+        signs.add((det > 0) - (det < 0))
+    ax, ay, bx, by, px, py = map(F, t)
+    det1 = (bx - ax) * (py - by) - (by - ay) * (px - bx)
+    print("   %-42s exact det at unit scale = %s; sign at every 2^k listed: %s"
+          % (name, det1, sorted(signs)))

@@ -1,5 +1,5 @@
 diff --git a/src/algorithm/CGAlgorithmsDD.cpp b/src/algorithm/CGAlgorithmsDD.cpp
-index df6fd01..ceae7ba 100644
+index df6fd01..a066b90 100644
 --- a/src/algorithm/CGAlgorithmsDD.cpp
 +++ b/src/algorithm/CGAlgorithmsDD.cpp
 @@ -21,6 +21,7 @@
@@ -10,15 +10,16 @@ index df6fd01..ceae7ba 100644
  
  using namespace geos::geom;
  using namespace geos::algorithm;
-@@ -59,6 +60,24 @@ CGAlgorithmsDD::orientationIndex(double p1x, double p1y,
+@@ -59,6 +60,25 @@ CGAlgorithmsDD::orientationIndex(double p1x, double p1y,
          throw util::IllegalArgumentException("CGAlgorithmsDD::orientationIndex encountered NaN/Inf numbers");
      }
  
 +    // PROTOTYPE: if the coordinate differences are tiny (or huge), their products
 +    // underflow (or overflow) and neither the filter nor DD is exact any more.
 +    // The sign of the determinant does not change when all x values and all
-+    // y values are each multiplied by a power of two, and scaling up is exact,
-+    // so rescale x and y separately to bring the differences to about 1.
++    // y values are each multiplied by a power of two, so rescale x and y
++    // separately to bring the differences to about 1 (exact when scaling up;
++    // scaling down can round away bits of ordinates ~2^-1000 times smaller).
 +    {
 +        double mx = std::max(std::abs(p2x - p1x), std::abs(qx - p2x));
 +        double my = std::max(std::abs(p2y - p1y), std::abs(qy - p2y));
@@ -35,7 +36,7 @@ index df6fd01..ceae7ba 100644
      // fast filter for orientation index
      // avoids use of slow extended-precision arithmetic in many cases
      int index = orientationIndexFilter(p1x, p1y, p2x, p2y, qx, qy);
-@@ -117,6 +136,20 @@ CoordinateXY
+@@ -117,6 +137,20 @@ CoordinateXY
  CGAlgorithmsDD::intersection(const CoordinateXY& p1, const CoordinateXY& p2,
                               const CoordinateXY& q1, const CoordinateXY& q2)
  {

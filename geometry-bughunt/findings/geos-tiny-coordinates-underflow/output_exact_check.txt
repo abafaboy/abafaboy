@@ -23,3 +23,8 @@
 
 6. Segment (2e-200 0)-(2e-200 2e-200) against (1e-200 1e-200)-(3e-200 1e-200)
    contact parameters: ['1/2'] -> point (2e-200, 1e-200) == (2e-200, 1e-200): True
+
+7. primitives_scaling.c: exact orientation of the three triples
+   A=(0 0) B=(1 0) P=(0 1)                    exact det at unit scale = 1; sign at every 2^k listed: [1]
+   A=(-1.6 1.2) B=(-3.2 -1.8) P=(-6.4 -7.8)   exact det at unit scale = -3602879701896397/10141204801825835211973625643008; sign at every 2^k listed: [-1]
+   A=(0 0) B=(1 1) P=(2 2+2^-40)              exact det at unit scale = 1/1099511627776; sign at every 2^k listed: [1]
