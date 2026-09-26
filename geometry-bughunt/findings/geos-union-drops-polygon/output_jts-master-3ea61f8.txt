@@ -1,0 +1,7 @@
+JTS 1.21.0 SNAPSHOT
+isValid(A)=true isValid(B)=true area(A)=0.5 area(B)=0.5
+OverlayNGRobust union         area = 1.0                    (expected ~1.0)  POLYGON ((0 0, -0 0, 0 0, 0 1, 1 1, 1 0, 0 0))
+OverlayNGRobust intersection  area = 5.0E-21                (expected ~5e-21)  POLYGON ((0 0, 1 1, 0 0, 0 0))
+OverlayNGRobust B - A         area = 0.5                    (expected ~0.5)  POLYGON ((0 0, 0 1, 1 1, 0 0))
+OverlayNGRobust A - B         area = 0.5                    (expected ~0.5)  MULTIPOLYGON (((0 0, -0 0, 0 0, 0 0)), ((1 1, 1 0, 0 0, 1 1)))
+OverlayNGRobust symdifference area = 1.0                    (expected ~1.0)  MULTIPOLYGON (((1 1, 0 0, 0 1, 1 1)), ((0 0, -0 0, 0 0, 0 0)), ((1 1, 1 0, 0 0, 1 1)))
