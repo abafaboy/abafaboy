@@ -1,5 +1,5 @@
 /*
- * Runs the checks of repro.c for the unit S = 1e<k>, k = -320 .. 308, and prints,
+ * Runs the checks of repro.c for the unit S = 1e<k>, k = -320 .. 307, and prints,
  * for each check, the ranges of k where GEOS gives a wrong answer.
  * The expected answers do not depend on k (the shapes are the same).
  *
@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <geos_c.h>
 
 static GEOSContextHandle_t ctx;
@@ -34,27 +35,45 @@ static GEOSGeometry *rd(const char *tmpl, const char *unit)
     return g;
 }
 
-/* exact (tolerance 0) equality after normalization */
-static int same(GEOSGeometry *got, GEOSGeometry *exp)
+/* vertex-by-vertex equality after normalization, each ordinate within tol.
+ * (Compares ordinates directly: GEOSEqualsExact with a tolerance uses distances,
+ * which themselves underflow/overflow at these scales.) */
+static int same(GEOSGeometry *got, GEOSGeometry *exp, double tol)
 {
     if (!got) return 0;
     GEOSNormalize_r(ctx, got);
     GEOSNormalize_r(ctx, exp);
-    return GEOSEqualsExact_r(ctx, got, exp, 0.0) == 1;
+    if (tol == 0.0) return GEOSEqualsExact_r(ctx, got, exp, 0.0) == 1;
+    if (GEOSGeomTypeId_r(ctx, got) != GEOS_POLYGON || GEOSGetNumInteriorRings_r(ctx, got) != 0)
+        return 0;
+    const GEOSCoordSequence *cg = GEOSGeom_getCoordSeq_r(ctx, GEOSGetExteriorRing_r(ctx, got));
+    const GEOSCoordSequence *ce = GEOSGeom_getCoordSeq_r(ctx, GEOSGetExteriorRing_r(ctx, exp));
+    unsigned ng = 0, ne = 0;
+    GEOSCoordSeq_getSize_r(ctx, cg, &ng);
+    GEOSCoordSeq_getSize_r(ctx, ce, &ne);
+    if (ng != ne) return 0;
+    for (unsigned j = 0; j < ng; j++) {
+        double gx, gy, ex, ey;
+        GEOSCoordSeq_getXY_r(ctx, cg, j, &gx, &gy);
+        GEOSCoordSeq_getXY_r(ctx, ce, j, &ex, &ey);
+        if (!(fabs(gx - ex) <= tol && fabs(gy - ey) <= tol)) return 0;
+    }
+    return 1;
 }
 
-#define NCHECK 7
+#define NCHECK 9
 static const char *names[NCHECK] = {
     "orientationIndex((0 0),(1S 0),(0 1S)) != 0",
     "isValid(T)", "isValid(H)", "contains(A, P)", "relate(A, B) = 212101212",
-    "intersection(A, B) exact", "union(A, B) exact"};
+    "intersection(A, B) exact", "union(A, B) exact",
+    "intersection(A, B) vertices within 1e-9*S", "union(A, B) vertices within 1e-9*S"};
 
 int main(void)
 {
     ctx = GEOS_init_r();
     GEOSContext_setErrorMessageHandler_r(ctx, quiet, NULL);
     printf("GEOS %s\n", GEOSversion());
-    int lo = -320, hi = 308;
+    int lo = -320, hi = 307;  /* 4e308 would overflow to inf */
     int bad[NCHECK][700];
     for (int k = lo; k <= hi; k++) {
         char unit[16];
@@ -79,8 +98,10 @@ int main(void)
         if (im) GEOSFree_r(ctx, im);
         GEOSGeometry *gi = GEOSIntersection_r(ctx, a, b);
         GEOSGeometry *gu = GEOSUnion_r(ctx, a, b);
-        bad[5][i] = !same(gi, ei);
-        bad[6][i] = !same(gu, eu);
+        bad[5][i] = !same(gi, ei, 0.0);
+        bad[6][i] = !same(gu, eu, 0.0);
+        bad[7][i] = !same(gi, ei, 1e-9 * s);
+        bad[8][i] = !same(gu, eu, 1e-9 * s);
         GEOSGeometry *all[] = {t, h, a, p, b, ei, eu, gi, gu};
         for (size_t j = 0; j < sizeof all / sizeof *all; j++) if (all[j]) GEOSGeom_destroy_r(ctx, all[j]);
     }

@@ -83,7 +83,7 @@ intersection = MULTIPOLYGON(((-1.7 1.8999999999999999,-0.59999999999999998 3,2 -
 
 The results are also inconsistent with each other: `difference` is correct (3.55), `intersection` returns all of A (3.63), and together they add up to about twice area(A).
 
-On 1.83, 1.85/1.86, and on the parent commit of 9c4d7529b, the output is `212101212`, `within=false`, `overlaps=true`, intersection 0.0776978…, union 3.8223….
+On 1.83 and 1.85/1.86 (`output_1.83-system.txt`, `output_1.86.0.txt`) the output is `212101212`, `within=false`, `overlaps=true`, intersection 0.0776978…, union 3.8223…. The parent commit of 9c4d7529b also gives within=false and the correct areas (checked through the test harness, which does not print the relation matrix).
 
 ## Versions
 
@@ -117,28 +117,37 @@ These points are based on bisection, on a trace of the values involved, and on o
    }
    ```
 
-2. **Trace for this input.** `handle_as_touch` is reached from `get_turn_info` (get_turn_info.hpp:1481-1510) with P = B's segment (-2.6, 1) → B0 and Q = A's segment (2, -1) → (-1.7, 1.9). So pj = B0 and qj = A1, which are 5e-16 apart.
+2. **Trace for this input.** `handle_as_touch` is reached from `get_turn_info` (get_turn_info.hpp:1481-1510). In its own terms, `non_touching_range` is B's segment (-2.6, 1) → B0 → (-1, 2), and `other_range` is A's segment (2, -1) → A1 = (-1.7, 1.9) → (-0.6, 3). So pj = B0 and qj = A1, which are 5e-16 apart.
    - `pj_wrt_q1` and `qj_wrt_p2` are both -1. Checked with exact arithmetic, both signs are correct: B0 lies just outside A, and A1 lies just inside B.
    - `pj_wrt_q2` and `qj_wrt_p1` are 0. `side_by_triangle` classifies them as collinear, although the exact values are +1 and -1 (the determinants are about 2e-16).
    - The new condition therefore returns `false`, and the intersection is processed as a `touch_interior` turn.
 
-3. **Experiment.** With only that `if` disabled on develop (`experiment_disable_condition.diff`), the same calls reach the existing distance test at get_turn_info.hpp:410-412. That test gives `dm = 8.9e-31`, so the intersection is handled as a touch. The final results are then correct for both the minimal case and the original case: relation 212101212, intersection area 0.0776978…, union 3.8223….
+3. **Experiment.** With only that `if` disabled on develop (`experiment_disable_condition.diff`, output in `output_develop_condition_disabled.txt`), the same calls reach the existing distance test at get_turn_info.hpp:410-412. That test gives `dm = 8.9e-31`, so the intersection is handled as a touch. The final results are then correct for both inputs. For the minimal case: relation 212101212, intersection area 0.0776978…, union 3.8223…. For the original case: relation 212101212, intersection 4.3e-16, union 2.0.
    - The inputs added with 9c4d7529b for #1288 and #1222 still give the expected areas with the condition disabled on develop. The parent commit fails #1288 (multi/poly difference returns 0).
    - Upstream tests run with the condition disabled: see "Upstream tests" below.
    - This suggests the condition catches configurations with nearly coincident pj/qj, where the "segments cross or touch in the middle" reasoning in its comment does not hold. I have not worked out a fix that keeps #1288 fixed in all its variants.
 
-4. Both relate (`within`/`relation`) and overlay change together, which fits a change in the shared turn computation (`get_turn_info`) rather than in traversal.
+4. Both relate (`within`/`relation`) and overlay change together, which fits a change in the shared turn computation (`get_turn_info`) rather than in traversal. The regression also predates the graph-based traversal (`algorithms/detail/overlay/graph/`, first present in 1.89.0). Only the *form* of the wrong union changed in 1.89 (the original case gives area 0 in 1.87/1.88 and area(B) from 1.89 on).
 
 ## Upstream tests (develop, with and without the condition)
 
-UPSTREAM_TESTS_PLACEHOLDER
+I compiled seven upstream test programs from `test/`:
+
+- `set_operations/intersection/intersection`, `intersection_multi`
+- `set_operations/union/union`, `union_multi`
+- `set_operations/difference/difference`, `difference_multi`
+- `relate/relate_areal_areal`
+
+Build settings: header-only Boost.Test, `-DBOOST_GEOMETRY_TEST_ONLY_ONE_TYPE` (double only), `-O1 -DNDEBUG`, g++ 13.3, not through b2.
+
+All seven report "No errors detected", both on unmodified develop 196d04c and with the condition disabled. This is a partial check, not a full test-suite run.
 
 ## Related issues
 
 - #1288: the issue fixed by 9c4d7529b.
 - #1360 (open): "Buffer (or other overlays) fail because arrival is not handled correctly". It concerns arrival handling for nearly collinear touching segments in `get_turn_info`, the same area of the code but a different block.
 - #1487 (open): "No intersection for polygons with close boundaries". In my builds its test case starts failing in 1.89.0, not 1.87.0, and disabling the condition does not fix it. So it looks like a separate regression.
-- #1201 (open): intersection returns the second polygon for a nearly coincident vertex. It fails from 1.83 on and is not affected by the experiment.
+- #1201 (open): intersection returns the second polygon for a nearly coincident vertex. It fails in 1.83, 1.92.0 and develop, and is not affected by the experiment.
 
 ## How it was found
 
