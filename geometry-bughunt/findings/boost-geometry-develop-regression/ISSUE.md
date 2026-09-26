@@ -106,7 +106,7 @@ Test setup:
 
 These points are based on bisection, on a trace of the values involved, and on one local experiment. They are not a proposed fix.
 
-1. **Bisection.** `git bisect` between boost-1.86.0 and boost-1.87.0 points to 9c4d7529b. That commit added this early return to `touch_interior::handle_as_touch` (develop: `include/boost/geometry/algorithms/detail/overlay/get_turn_info.hpp:366-379`):
+1. **Bisection.** `git bisect` between boost-1.86.0 and boost-1.87.0 points to 9c4d7529b. That commit added this early return to `touch_interior::handle_as_touch` (develop: `include/boost/geometry/algorithms/detail/overlay/get_turn_info.hpp:366-378`):
 
    ```cpp
    if (has_k
